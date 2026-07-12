@@ -13,60 +13,53 @@
   <rect width="1200" height="680" fill="#f8fafc"/>
   <rect x="48" y="40" width="1104" height="600" rx="24" fill="#ffffff" stroke="#e2e8f0"/>
   <text x="88" y="94" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="34" font-weight="700" fill="#0f172a">迭代收益：Delta PCC 持续提升</text>
-  <text x="88" y="128" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" fill="#475569">每一轮将算法原子、实现落点和评估反馈连接起来，推动模型设计持续改进</text>
+  <text x="88" y="128" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" fill="#475569">根据原子设计，由用户提供 insight 并尝试，推动模型设计持续改进</text>
 
-  <rect x="128" y="154" width="944" height="430" rx="18" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
-  <line x1="170" y1="540" x2="1040" y2="540" stroke="#0f172a" stroke-width="2"/>
-  <line x1="170" y1="110" x2="170" y2="540" stroke="#0f172a" stroke-width="2"/>
+  <rect x="128" y="164" width="944" height="420" rx="18" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <line x1="170" y1="526" x2="1040" y2="526" stroke="#0f172a" stroke-width="2"/>
+  <line x1="170" y1="190" x2="170" y2="526" stroke="#0f172a" stroke-width="2"/>
 
   <g stroke="#e2e8f0" stroke-width="1">
-    <line x1="170" y1="492.2" x2="1040" y2="492.2"/>
-    <line x1="170" y1="396.7" x2="1040" y2="396.7"/>
-    <line x1="170" y1="301.1" x2="1040" y2="301.1"/>
-    <line x1="170" y1="205.6" x2="1040" y2="205.6"/>
-    <line x1="170" y1="110" x2="1040" y2="110"/>
+    <line x1="170" y1="526" x2="1040" y2="526"/>
+    <line x1="170" y1="442" x2="1040" y2="442"/>
+    <line x1="170" y1="358" x2="1040" y2="358"/>
+    <line x1="170" y1="274" x2="1040" y2="274"/>
+    <line x1="170" y1="190" x2="1040" y2="190"/>
   </g>
 
   <g font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="13" fill="#64748b">
-    <text x="136" y="496.2" text-anchor="end">0.30</text>
-    <text x="136" y="400.7" text-anchor="end">0.40</text>
-    <text x="136" y="305.1" text-anchor="end">0.50</text>
-    <text x="136" y="209.6" text-anchor="end">0.60</text>
-    <text x="136" y="114" text-anchor="end">0.70</text>
-    <text x="210" y="566" text-anchor="middle">1</text>
-    <text x="470" y="566" text-anchor="middle">2</text>
-    <text x="730" y="566" text-anchor="middle">3</text>
-    <text x="990" y="566" text-anchor="middle">4</text>
+    <text x="136" y="530" text-anchor="end">0.30</text>
+    <text x="136" y="446" text-anchor="end">0.40</text>
+    <text x="136" y="362" text-anchor="end">0.50</text>
+    <text x="136" y="278" text-anchor="end">0.60</text>
+    <text x="136" y="194" text-anchor="end">0.70</text>
+    <text x="210" y="552" text-anchor="middle">1</text>
+    <text x="470" y="552" text-anchor="middle">2</text>
+    <text x="730" y="552" text-anchor="middle">3</text>
+    <text x="990" y="552" text-anchor="middle">4</text>
   </g>
 
-  <text x="605" y="620" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700" fill="#334155">迭代次数</text>
-  <text x="82" y="326" transform="rotate(-90 82 326)" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700" fill="#334155">Delta PCC</text>
+  <text x="605" y="606" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700" fill="#334155">迭代次数</text>
+  <text x="82" y="358" transform="rotate(-90 82 358)" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700" fill="#334155">Delta PCC</text>
 
-  <path d="M 210 492.2 L 470 320.2 L 730 224.7 L 990 167.3 L 990 540 L 210 540 Z" fill="url(#areaGradient)"/>
-  <polyline points="210,492.2 470,320.2 730,224.7 990,167.3" fill="none" stroke="#2563eb" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 210 526 L 470 374.8 L 730 290.8 L 990 240.4 L 990 526 L 210 526 Z" fill="url(#areaGradient)"/>
+  <polyline points="210,526 470,374.8 730,290.8 990,240.4" fill="none" stroke="#2563eb" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 
   <g>
-    <circle cx="210" cy="492.2" r="10" fill="#ffffff" stroke="#2563eb" stroke-width="5"/>
-    <circle cx="470" cy="320.2" r="10" fill="#ffffff" stroke="#16a34a" stroke-width="5"/>
-    <circle cx="730" cy="224.7" r="10" fill="#ffffff" stroke="#f59e0b" stroke-width="5"/>
-    <circle cx="990" cy="167.3" r="10" fill="#ffffff" stroke="#e11d48" stroke-width="5"/>
+    <circle cx="210" cy="526" r="10" fill="#ffffff" stroke="#2563eb" stroke-width="5"/>
+    <circle cx="470" cy="374.8" r="10" fill="#ffffff" stroke="#16a34a" stroke-width="5"/>
+    <circle cx="730" cy="290.8" r="10" fill="#ffffff" stroke="#f59e0b" stroke-width="5"/>
+    <circle cx="990" cy="240.4" r="10" fill="#ffffff" stroke="#e11d48" stroke-width="5"/>
   </g>
 
   <g font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700">
-    <rect x="176" y="452" width="68" height="28" rx="14" fill="#dbeafe"/>
-    <text x="210" y="472" text-anchor="middle" fill="#1d4ed8">0.30</text>
-    <rect x="436" y="280" width="68" height="28" rx="14" fill="#dcfce7"/>
-    <text x="470" y="300" text-anchor="middle" fill="#15803d">0.48</text>
-    <rect x="696" y="184" width="68" height="28" rx="14" fill="#ffedd5"/>
-    <text x="730" y="204" text-anchor="middle" fill="#c2410c">0.58</text>
-    <rect x="956" y="126" width="68" height="28" rx="14" fill="#fce7f3"/>
-    <text x="990" y="146" text-anchor="middle" fill="#be185d">0.64</text>
-  </g>
-
-  <g font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="14" fill="#475569">
-    <text x="210" y="594" text-anchor="middle">初始方法</text>
-    <text x="470" y="594" text-anchor="middle">原子组合</text>
-    <text x="730" y="594" text-anchor="middle">NeMo 实现</text>
-    <text x="990" y="594" text-anchor="middle">自动评估反馈</text>
+    <rect x="176" y="482" width="68" height="28" rx="14" fill="#dbeafe"/>
+    <text x="210" y="502" text-anchor="middle" fill="#1d4ed8">0.30</text>
+    <rect x="436" y="334" width="68" height="28" rx="14" fill="#dcfce7"/>
+    <text x="470" y="354" text-anchor="middle" fill="#15803d">0.48</text>
+    <rect x="696" y="250" width="68" height="28" rx="14" fill="#ffedd5"/>
+    <text x="730" y="270" text-anchor="middle" fill="#c2410c">0.58</text>
+    <rect x="956" y="200" width="68" height="28" rx="14" fill="#fce7f3"/>
+    <text x="990" y="220" text-anchor="middle" fill="#be185d">0.64</text>
   </g>
 </svg>

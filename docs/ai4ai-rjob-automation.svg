@@ -1,0 +1,61 @@
+<svg width="1200" height="680" viewBox="0 0 1200 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">RJOB 自动化</title>
+  <desc id="desc">展示训练、推理和评估通过现有 RJOB wrapper 自动提交到智算平台的流程。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="680" fill="#f8fafc"/>
+  <rect x="48" y="40" width="1104" height="600" rx="24" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="88" y="94" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="34" font-weight="700" fill="#0f172a">智算平台自动化：训练 / 推理 / 评估</text>
+  <text x="88" y="128" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" fill="#475569">提交阶段只选择已有 wrapper 和参数，不临时改代码、不发明新脚本</text>
+
+  <rect x="82" y="184" width="178" height="356" rx="18" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="171" y="226" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">输入</text>
+  <text x="112" y="274" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="14" fill="#334155">config-path</text>
+  <text x="112" y="318" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="14" fill="#334155">job-name</text>
+  <text x="112" y="362" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="14" fill="#334155">dataset</text>
+  <text x="112" y="406" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="14" fill="#334155">input-dir</text>
+  <text x="112" y="468" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="13" fill="#64748b">参数完整后</text>
+  <text x="112" y="492" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="13" fill="#64748b">进入对应流水线</text>
+
+  <g filter="url(#shadow)">
+    <rect x="330" y="172" width="470" height="100" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="360" y="211" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#1d4ed8">训练</text>
+    <text x="360" y="244" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#334155">bash submit_train_rjob.sh &lt;job-name&gt; &lt;config-path&gt;</text>
+
+    <rect x="330" y="304" width="470" height="100" rx="14" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="360" y="343" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#15803d">推理</text>
+    <text x="360" y="376" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#334155">bash submit_inference_&lt;dataset&gt;_rjob.sh &lt;job-name&gt; &lt;config-path&gt;</text>
+
+    <rect x="330" y="436" width="470" height="100" rx="14" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="360" y="475" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#c2410c">评估</text>
+    <text x="360" y="508" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#334155">bash submit_evaluate_&lt;dataset&gt;_rjob.sh &lt;input-dir&gt; &lt;job-name&gt;</text>
+  </g>
+
+  <path d="M 260 222 L 330 222" stroke="#334155" stroke-width="2.4" marker-end="url(#arrow)"/>
+  <path d="M 260 354 L 330 354" stroke="#334155" stroke-width="2.4" marker-end="url(#arrow)"/>
+  <path d="M 260 486 L 330 486" stroke="#334155" stroke-width="2.4" marker-end="url(#arrow)"/>
+
+  <path d="M 800 222 L 910 222" stroke="#334155" stroke-width="2.4" marker-end="url(#arrow)"/>
+  <path d="M 800 354 L 910 354" stroke="#334155" stroke-width="2.4" marker-end="url(#arrow)"/>
+  <path d="M 800 486 L 910 486" stroke="#334155" stroke-width="2.4" marker-end="url(#arrow)"/>
+
+  <rect x="910" y="184" width="210" height="356" rx="18" fill="#f5f3ff" stroke="#ddd6fe" filter="url(#shadow)"/>
+  <text x="1015" y="226" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#6d28d9">智算平台队列</text>
+  <rect x="946" y="260" width="138" height="42" rx="21" fill="#ede9fe"/>
+  <text x="1015" y="287" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#5b21b6">GPU 资源</text>
+  <rect x="946" y="326" width="138" height="42" rx="21" fill="#dbeafe"/>
+  <text x="1015" y="353" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#1d4ed8">镜像与挂载</text>
+  <rect x="946" y="392" width="138" height="42" rx="21" fill="#dcfce7"/>
+  <text x="1015" y="419" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#15803d">日志与产物</text>
+  <rect x="946" y="458" width="138" height="42" rx="21" fill="#ffedd5"/>
+  <text x="1015" y="485" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#c2410c">指标汇总</text>
+
+  <rect x="262" y="574" width="676" height="42" rx="21" fill="#0f172a"/>
+  <text x="600" y="601" text-anchor="middle" font-family="Inter, Noto Sans SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff">固定闭环：设计 -> 训练 -> 推理 -> 评估 -> 反馈下一轮组件选择</text>
+</svg>

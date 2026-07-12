@@ -1,0 +1,71 @@
+# Hidden folders
+**/.*/
+
+# Python and tool caches
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.cache/
+**/.cache/
+*cache*/
+**/*cache*/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Logs and runtime output
+*.log
+*.out
+*.err
+nohup.out
+log/
+logs/
+**/log/
+**/logs/
+rjob_logs/
+
+# Training outputs, checkpoints, and model weights
+outputs/
+**/outputs/
+checkpoints/
+**/checkpoints/
+models/stack/
+AI4AI/examples/stack/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.bin
+
+# Experiment and workspace folders
+backup/
+nemo_experiments/
+workspace/
+workspaces/
+**/workspace/
+**/workspaces/
+benchmark/workspace/
+benchmark/cell-eval-outdir/
+wandb/
+**/wandb/
+
+# Large generated data artifacts
+*.h5ad
+*.h5
+*.hdf5
+*.lmdb
+*.mdb
+*.npy
+*.npz
+*.parquet
+*.pkl
+*.pickle
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.gz
+*.ffs_tmp
+.sync.*

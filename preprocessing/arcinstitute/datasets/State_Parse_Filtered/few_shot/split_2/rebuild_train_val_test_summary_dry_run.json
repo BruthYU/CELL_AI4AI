@@ -1,0 +1,32 @@
+{
+  "counts": {
+    "test": 423,
+    "train": 21711,
+    "val": 423
+  },
+  "dry_run": true,
+  "elapsed_seconds": 0.007524251937866211,
+  "out_root": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Parse_Filtered/few_shot/split_2",
+  "skipped_missing_control_count": 2,
+  "skipped_missing_control_keys": [
+    {
+      "cartesian_key": [
+        "Donor5",
+        "Plasmablast",
+        "GM-CSF"
+      ],
+      "count": 1
+    },
+    {
+      "cartesian_key": [
+        "Donor5",
+        "Plasmablast",
+        "IL-26"
+      ],
+      "count": 1
+    }
+  ],
+  "skipped_missing_control_unique": 2,
+  "split": "split_2",
+  "toml_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Parse_Filtered/few_shot/split_2.toml"
+}

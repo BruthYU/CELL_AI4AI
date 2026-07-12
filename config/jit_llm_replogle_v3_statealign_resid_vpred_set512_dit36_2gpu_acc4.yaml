@@ -1,0 +1,165 @@
+dataset_name: replogle
+model_name: JIT_LLM_REPLOGLE_V3_STATEALIGN
+
+cell_sentence_len: 512
+cellmap_width: 512
+
+layers_before_pool:
+  pert_onehot:
+    num_embeddings: 2024
+    input_dim: 256
+    layer_type: embedding
+    dims: [256, 256]
+    dropout_rate: 0.0
+
+  batch_onehot:
+    num_embeddings: 4
+    input_dim: 256
+    layer_type: embedding
+    dims: [256, 256]
+    dropout_rate: 0.0
+
+  cell_type_onehot:
+    num_embeddings: 4
+    input_dim: 256
+    layer_type: embedding
+    dims: [256, 256]
+    dropout_rate: 0.0
+
+layers_after_pool:
+  layer_type: mlp
+  input_dim: -1
+  dims: [512, 512]
+  dropout_rate: 0.0
+  act_last_layer: true
+  act_fn: SiLU
+
+layers_for_aggregation:
+  layer_type: mlp
+  input_dim: 1024
+  dims: [1024, 512]
+  dropout_rate: 0.0
+  act_last_layer: true
+  act_fn: SiLU
+
+prepare_model:
+  cell_dim: 2000
+  n_decoder_layers: 4
+  learning_rate: 8e-5
+  batch_class: 4
+  cell_class: 4
+  hidden_channels: 32
+  transformer_backbone_kwargs:
+      backbone_name: llama
+      vocab_size: 100
+      hidden_size: ${cellmap_width}
+      intermediate_size: 1024
+      num_hidden_layers: 4
+      num_attention_heads: 8
+      num_key_value_heads: 8
+      max_position_embeddings: ${cell_sentence_len}
+
+  condition_mode: deterministic
+  pool_sample_covariates: true
+  regularization: 0.0
+
+  pooling: attention_token
+  pooling_kwargs:
+    num_heads: 8
+    pool_method: mean
+
+  layers_before_pool: ${layers_before_pool}
+  layers_after_pool: ${layers_after_pool}
+  layers_for_aggregation: ${layers_for_aggregation}
+  condition_embedding_dim: 256
+  cond_output_dropout: 0.1
+  condition_encoder_kwargs: {}
+  time_freqs: 512
+  time_max_period: 10000
+  time_encoder_dims: [1024, 512]
+  time_encoder_dropout: 0.0
+  hidden_dims: [2048, 2048, 2048]
+  hidden_dropout: 0.0
+  src_loss_weight: 0.05
+  conditioning: concatenation
+
+  match_fn: match_linear
+  solver_kwargs: {}
+  layer_norm_before_concatenation: false
+  linear_projection_before_concatenation: false
+  seed: 0
+  # megatron_ckpt: null
+  megatron_ckpt: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/remote-chen/nemo_cellflow/outputs/aivc-llama-jit-replogle-v3-statealign-resid-gdelta-neg0235-set512-dit36-2gpu-acc4-lr8e5-w6/checkpoints/finetune_pearson_best-epoch=129/weights
+
+  cell_sentence_len: ${cell_sentence_len}
+  cellmap_width: ${cellmap_width}
+  dit_depth: 36
+  dit_kwargs:
+      num_heads: 16
+      mlp_ratio: 4.0
+  use_gene_delta_head: true
+  gene_delta_head_dims: [1024, 1024]
+  gene_delta_head_scale: 1.0
+  gene_delta_head_zero_init: true
+  gene_delta_head_t: 1.0
+  pred_type: v
+  loss_type: v
+  state_align_loss_weight: 6.0
+  state_align_delta_pcc_weight: 3.0
+  state_align_delta_mse_weight: 20.0
+  state_align_bulk_mse_weight: 3.0
+  state_align_residual_delta_pcc_weight: 6.0
+  state_align_residual_delta_mse_weight: 15.0
+  state_align_common_delta_mse_weight: 20.0
+  state_align_delta_norm_mse_weight: 8.0
+  state_align_delta_abs_mse_weight: 8.0
+  state_align_delta_smooth_l1_weight: 4.0
+  state_align_excess_delta_l1_weight: 4.0
+  state_align_pred_transform: clip_zero
+  eval_pred_transform: clip_zero
+
+dataset:
+  batch_size: 32
+  num_workers: 16
+  random_seed: 42
+  control_pert: "non-targeting"
+  cell_sentence_len: ${cell_sentence_len}
+
+  replogle_root: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered
+  cell_lines: [rpe1, hepg2, jurkat, k562]
+  global_keys_path: ${dataset.replogle_root}/global_keys.pkl
+  train_lmdb_path: ${dataset.replogle_root}/few_shot/rpe1/replogle_train_rpe1
+  val_lmdb_path: ${dataset.replogle_root}/few_shot/rpe1/replogle_val_rpe1
+  test_lmdb_path: ${dataset.replogle_root}/few_shot/rpe1/replogle_test_rpe1
+  control_lmdb_path: ${dataset.replogle_root}/few_shot/rpe1/replogle_control_rpe1
+
+experiment:
+  precision: 32
+  monitor: val_loss
+  pearson_monitor: val_delta_pearson
+  ckpt_freq: 25
+  use_wandb: true
+  seed: 42
+  check_val_every_n_epoch: 1
+  num_epoch: 500
+  stop_at_delta_pearson: 0.6
+  strategy: ddp
+  time_step: 5
+  num_sanity_val_steps: 2
+
+  num_nodes: 1
+  num_gpus: 2
+  accumulate_grad_batches: 4
+  tensor_model_parallel_size: 1
+  pipeline_model_parallel_size: 1
+
+  group: aivc-llama-jit-replogle-v3-statealign-resid-vpred-set512-dit36-2gpu-acc4-lr8e5-w6
+
+Interpolant:
+  probability_path:
+        constant_noise: 0.
+  prior_distribution: gaussian
+  prior_kwargs:
+    total_count: 1
+    logits: 0.1
+    zi_logits: 0

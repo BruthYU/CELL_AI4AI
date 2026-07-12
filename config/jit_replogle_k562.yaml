@@ -1,0 +1,182 @@
+dataset_name: replogle
+model_name: JIT
+
+cell_sentence_len: 32
+cellmap_width: 512
+
+layers_before_pool:
+  pert_onehot:
+    num_embeddings: 2024
+    input_dim: 256
+    layer_type: embedding
+    dims: [256, 256]
+    dropout_rate: 0.0
+
+  batch_onehot:
+    num_embeddings: 1 # 根据参与的plate数而定
+    input_dim: 256
+    layer_type: embedding
+    dims: [256, 256]
+    dropout_rate: 0.0
+
+layers_after_pool:
+  layer_type: mlp
+  input_dim: -1  # m * 256, dynamically determined
+  dims: [512, 512]
+  dropout_rate: 0.0
+  act_last_layer: true
+  act_fn: SiLU
+
+layers_for_aggregation:
+  layer_type: mlp
+  input_dim: 1024  # 2 * 512
+  dims: [1024, 512]
+  dropout_rate: 0.0
+  act_last_layer: true
+  act_fn: SiLU
+
+dataset:
+  batch_size: 32
+  num_workers: 16
+  random_seed: 42
+  control_pert: "non-targeting"
+  cell_sentence_len: ${cell_sentence_len}
+
+  # global_keys_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/global_keys.pkl
+  # train_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/hepg2/replogle_train_hepg2
+  # val_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/hepg2/replogle_val_hepg2
+  # test_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/hepg2/replogle_test_hepg2
+  # control_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/hepg2/replogle_control_hepg2
+
+  # global_keys_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/global_keys.pkl
+  # train_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/jurkat/replogle_train_jurkat
+  # val_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/jurkat/replogle_val_jurkat
+  # test_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/jurkat/replogle_test_jurkat
+  # control_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/jurkat/replogle_control_jurkat
+
+  global_keys_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/global_keys.pkl
+  train_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/k562/replogle_train_k562
+  val_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/k562/replogle_val_k562
+  test_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/k562/replogle_test_k562
+  control_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/k562/replogle_control_k562
+
+
+  # global_keys_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/global_keys.pkl
+  # train_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/rpe1/replogle_train_rpe1
+  # val_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/rpe1/replogle_val_rpe1
+  # test_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/rpe1/replogle_test_rpe1
+  # control_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Replogle_Filtered/few_shot/rpe1/replogle_control_rpe1
+
+Interpolant:
+  detach: True
+  probability_path:
+      if_OT: false
+      constant_noise: 0.
+  prior_distribution: gaussian
+  prior_kwargs:
+    total_count: 1
+    logits: 0.1
+    zi_logits: 0
+
+prepare_model:
+    cell_dim: 2000 # gene 维度
+    n_decoder_layers: 4
+    batch_class: 1
+    cell_class: 4
+    hidden_channels: 32
+    use_deepsets: true
+    transformer_backbone_kwargs:
+        backbone_name: llama
+        vocab_size: 100
+        hidden_size: ${cellmap_width}
+        intermediate_size: 1024
+        num_hidden_layers: 4
+        num_attention_heads: 8
+        num_key_value_heads: 8
+        max_position_embeddings: ${cell_sentence_len}
+    deepsets_kwargs:
+      K: ${cell_sentence_len}
+      d_model: 512
+      hidden: 1024
+
+
+
+    condition_mode: deterministic # deterministic or stochastic
+    pool_sample_covariates: true
+    regularization: 0.0 # float
+
+    pooling: attention_token
+    pooling_kwargs:
+      num_heads: 8
+      pool_method: mean
+
+    layers_before_pool: ${layers_before_pool}
+    layers_after_pool: ${layers_after_pool}
+    layers_for_aggregation: ${layers_for_aggregation}
+    condition_embedding_dim: 256
+    cond_output_dropout: 0.9
+    condition_encoder_kwargs: {}
+    time_freqs: 512
+    time_max_period: 10000
+    time_encoder_dims: [1024, 512]
+    time_encoder_dropout: 0.0
+    hidden_dims: [2048, 2048, 2048]
+    hidden_dropout: 0.0
+    conditioning: concatenation
+    src_loss_weight: 0.05
+
+    decoder_dims: [4096, 4096, 4096]
+    decoder_dropout: 0.0
+    act_fn: SiLU
+    vf_kwargs: null
+
+    match_fn: match_linear
+    solver_kwargs: {}
+    layer_norm_before_concatenation: false
+    linear_projection_before_concatenation: false
+    seed: 0
+    learning_rate: 5e-4
+    # megatron_ckpt: null
+    megatron_ckpt: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/outputs/checkpoints/aivc-replogle-jit-k562_20260702_054543/finetune_best-step=5759/weights
+    cellmap_width: ${cellmap_width}
+    cell_sentence_len: ${cell_sentence_len}
+    dit_depth: 16
+
+    cellmap_encoder_kwargs:
+        gene_encoder_type: mlp
+        dims: [2000, 1024, 512]
+        dropout_rate: 0.0
+        act_fn: SiLU
+
+    cellmap_decoder_kwargs:
+        gene_decoder_type: mlp
+        dims: [512, 1024, 2000]
+        dropout_rate: 0.0
+        act_fn: SiLU
+
+    dit_kwargs:
+        num_heads: 16
+        mlp_ratio: 4.0
+
+    pred_type: x
+    loss_type: x
+
+experiment:
+  precision: 32
+  monitor: val_loss
+  ckpt_freq: 10
+  use_wandb: true
+  seed: 42
+  check_val_every_n_epoch: 20
+  num_epoch: 300
+  strategy: ddp
+  time_step: 5
+  num_sanity_val_steps: 2
+
+  num_nodes: 1
+  num_gpus: 2
+  accumulate_grad_batches: 1
+  tensor_model_parallel_size: 1
+  pipeline_model_parallel_size: 1
+
+  group: aivc-replogle-jit-k562

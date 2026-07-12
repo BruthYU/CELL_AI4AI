@@ -1,0 +1,27 @@
+{
+  "control_pert": "PBS",
+  "elapsed_seconds": 356.9470057487488,
+  "lmdb_counts": {
+    "control": 215,
+    "test": 1354,
+    "train": 20697,
+    "val": 85
+  },
+  "min_pert_cells": 3,
+  "n_groups": 19459,
+  "n_rows": 9697974,
+  "n_vars": 2000,
+  "out_root": "preprocessing/arcinstitute/datasets/State_Parse_Filtered/few_shot/split_5_state",
+  "padding_seed": 0,
+  "raw_h5ad": "preprocessing/arcinstitute/datasets/State_Parse_Filtered/only_hvg/PBMC_only_hvg.h5ad",
+  "shard_size": 1024,
+  "split_group_counts": {
+    "control": 215,
+    "dropped": 1109,
+    "test": 744,
+    "train": 17343,
+    "val": 48
+  },
+  "split_name": "split_5_state",
+  "split_toml": "preprocessing/arcinstitute/datasets/State_Parse_Filtered/few_shot/split_5_state.toml"
+}

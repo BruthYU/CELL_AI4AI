@@ -1,0 +1,44 @@
+{
+  "analysis_prompt_path": ".codex/skills/perturbation-benchmark-analysis/references/full_analysis_angles.md",
+  "vcbench": {
+    "runs_root": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/reports/vcbench_comparison_20260611/vcbench_runs",
+    "models": ["cpa", "biolord", "state", "gears", "sclambda"],
+    "seeds": [44],
+    "datasets": [
+      {
+        "dataset": "kang",
+        "benchmark": "Kang Task05",
+        "splits": [
+          "split_lopo_test_patient_101",
+          "split_lopo_test_patient_1015",
+          "split_lopo_test_patient_1016",
+          "split_lopo_test_patient_1039",
+          "split_lopo_test_patient_107",
+          "split_lopo_test_patient_1244",
+          "split_lopo_test_patient_1256",
+          "split_lopo_test_patient_1488"
+        ],
+        "target_col": "perturbation",
+        "control_col": "control",
+        "context_cols": ["patient", "eval_cell_type"]
+      },
+      {
+        "dataset": "norman",
+        "benchmark": "Norman Task07",
+        "splits": ["split_task07_seed42"],
+        "target_col": "perturbation",
+        "control_col": "control",
+        "context_cols": ["eval_cell_type"]
+      },
+      {
+        "dataset": "zscape_unseen_gene",
+        "benchmark": "ZSCAPE develop",
+        "splits": ["split_zscape_seen_cell_unseen_gene_v1"],
+        "target_col": "perturbation",
+        "control_col": "control",
+        "context_cols": ["eval_cell_type"],
+        "max_cellclasses": 40
+      }
+    ]
+  }
+}

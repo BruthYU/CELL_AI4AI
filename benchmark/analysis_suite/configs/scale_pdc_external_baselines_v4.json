@@ -1,0 +1,371 @@
+{
+  "title": "scale+pdc vs CPA/BioLord/State/GEARS/scLambda split-centered analysis v4",
+  "comparison_policy": {
+    "summary": "Primary baseline comparisons must use external non-scale models: CPA, BioLord, State, GEARS, and scLambda. Detailed baseline analysis should include available metric profiles, cellclass/per-perturbation breakdowns, and DE/logFC artifact availability. Prior LLM, train delta-memory, memory anchors, lambda0, raw weak baselines, and other scale-family ablations are diagnostic-only and must not be used as the main baseline evidence.",
+    "non_scale_model_names": [
+      "CPA",
+      "BioLord",
+      "State",
+      "GEARS",
+      "scLambda"
+    ],
+    "diagnostic_only": [
+      "prior LLM and train delta-memory artifacts",
+      "memory-anchor or train-only delta-memory baselines",
+      "lambda0/raw weak baseline rows",
+      "scale-only or same-scale ablations",
+      "PRNet unless explicitly requested"
+    ]
+  },
+  "datasets": [
+    {
+      "id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "label": "scale+pdc",
+      "role": "primary",
+      "type": "cell_eval",
+      "layout": "nested",
+      "path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/replogle_main_corrected_fullcell_remote_ep129_20260623/results_calibrate",
+      "h5ad_root": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/replogle_main_corrected_fullcell_remote_ep129_20260623",
+      "include_de_events": true
+    },
+    {
+      "id": "vcbench_external_kang_norman_zscape",
+      "type": "wide_comparison",
+      "path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/reports/vcbench_comparison_20260611/tables/paper_split_protocol_wide_20260616/vcbench_external_pearson_delta.csv",
+      "metric": "external_pearson_delta",
+      "include_datasets": [
+        "Kang Task05",
+        "Norman Task07",
+        "ZSCAPE develop"
+      ],
+      "primary_models": [
+        {
+          "label": "scale+pdc",
+          "role": "primary",
+          "select": "first",
+          "columns": [
+            "SCALE_train_only_memory_calibration_plain_train_output_blend_anchor_scale_0_25_core_0_50_dc_1_00",
+            "SCALE_train_only_memory_calibration_PDC_validation_selected_lambda_0_7122_raw_pure_model_train_only_delta_center"
+          ]
+        }
+      ],
+      "external_models": [
+        {"label": "CPA", "column": "CPA"},
+        {"label": "BioLord", "column": "BioLord"},
+        {"label": "State", "column": "State"},
+        {"label": "GEARS", "column": "GEARS"},
+        {"label": "scLambda", "column": "scLambda"}
+      ]
+    },
+    {
+      "id": "task03_task04_matched_external",
+      "type": "wide_comparison",
+      "path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/reports/vcbench_comparison_20260611/tables/paper_split_model_comparison_wide_20260616.csv",
+      "metric": "matched_delta_pcc",
+      "include_datasets": [
+        "ComboSciPlex3 Task03",
+        "ComboSciPlex3 Task04"
+      ],
+      "exact_match": {
+        "metric_protocol": "Matched held-out-group deltaPCC",
+        "paper_table": "main"
+      },
+      "primary_models": [
+        {
+          "label": "SCALE/SCALE+calibration",
+          "role": "primary",
+          "select": "max",
+          "columns": [
+            "SCALE",
+            "SCALE_train_only_memory_calibration_output_blend_scale_0_25",
+            "SCALE_train_only_memory_calibration_output_blend_scale_0_5",
+            "SCALE_train_only_memory_calibration_output_blend_scale_0_75",
+            "SCALE_train_only_memory_calibration_output_blend_scale_1_0",
+            "SCALE_train_only_prior_bias_a_model_0_05_b_prior_0_2_w_pert_0_75_w_cell_0_25",
+            "SCALE_train_only_prior_bias_a_model_0_55_b_prior_0_6_w_pert_0_25_w_cell_0_75",
+            "SCALE_train_only_prior_bias_a_model_0_65_b_prior_0_4_w_pert_0_3_w_cell_0_7",
+            "SCALE_train_only_prior_bias_a_model_0_85_b_prior_0_15_w_pert_1_w_cell_0",
+            "SCALE_train_only_prior_bias_a_model_0_85_b_prior_0_75_w_pert_0_85_w_cell_0_15",
+            "SCALE_train_only_prior_bias_a_model_0_b_prior_0_35_w_pert_0_15_w_cell_0_85"
+          ]
+        }
+      ],
+      "external_models": [
+        {"label": "CPA", "column": "CPA"},
+        {"label": "BioLord", "column": "BioLord"},
+        {"label": "State", "column": "State"},
+        {"label": "GEARS", "column": "GEARS"},
+        {"label": "scLambda", "column": "scLambda"}
+      ]
+    },
+    {
+      "id": "vcbench_external_baseline_details",
+      "type": "vcbench_metric_details",
+      "avg_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/reports/vcbench_comparison_20260611/tables/vcbench_metrics_long.csv",
+      "cellclass_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/reports/vcbench_comparison_20260611/tables/vcbench_metrics_by_cellclass.csv",
+      "include_datasets": [
+        "kang",
+        "norman",
+        "zscape*"
+      ],
+      "include_models": [
+        "cpa",
+        "biolord",
+        "state",
+        "gears",
+        "sclambda"
+      ],
+      "dataset_label_map": {
+        "kang": "Kang Task05",
+        "norman": "Norman Task07"
+      },
+      "model_label_map": {
+        "cpa": "CPA",
+        "biolord": "BioLord",
+        "state": "State",
+        "gears": "GEARS",
+        "sclambda": "scLambda"
+      },
+      "metrics": [
+        "pearson_delta",
+        "pearson_average",
+        "rmse_average",
+        "cosine_logfc",
+        "spearman_logfc",
+        "deg_precision",
+        "deg_recall",
+        "deg_iou"
+      ]
+    },
+    {
+      "id": "task03_task04_matched_detail",
+      "type": "matched_eval_details",
+      "detail_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/remote-chen/nemo_cellflow/analyzing/outputs/vcbench_matched_task03_task04_20260612_flow_corrected/matched_eval/matched_eval_detail.csv",
+      "group_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/remote-chen/nemo_cellflow/analyzing/outputs/vcbench_matched_task03_task04_20260612_flow_corrected/matched_eval/matched_group_metrics.csv",
+      "include_models": [
+        "ours_task03_aivc_flow",
+        "ours_task04_aivc_flow",
+        "cpa",
+        "biolord"
+      ],
+      "model_label_map": {
+        "ours_task03_aivc_flow": "SCALE task03 flow",
+        "ours_task04_aivc_flow": "SCALE task04 flow",
+        "cpa": "CPA",
+        "biolord": "BioLord"
+      },
+      "detail_metrics": [
+        "deltaPCC_mean",
+        "pearson_average_mean",
+        "rmse_average_mean",
+        "per_gene_std_mean",
+        "row_rmse_to_gene_mean"
+      ],
+      "group_metrics": [
+        "deltaPCC",
+        "pearson_average",
+        "rmse_average",
+        "per_gene_std",
+        "row_rmse_to_gene"
+      ]
+    }
+  ],
+  "manual_baseline_availability": [
+    {
+      "dataset_id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "group": "all evaluated cell lines",
+      "split_class": "replogle_full_cell_lines",
+      "model_label": "CPA",
+      "role": "external baseline",
+      "status": "missing",
+      "note": "No Replogle CPA artifact found in current VCBench summary tables or run directories; do not substitute prior LLM or delta-memory."
+    },
+    {
+      "dataset_id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "group": "all evaluated cell lines",
+      "split_class": "replogle_full_cell_lines",
+      "model_label": "BioLord",
+      "role": "external baseline",
+      "status": "missing",
+      "note": "No Replogle BioLord artifact found in current VCBench summary tables or run directories; do not substitute prior LLM or delta-memory."
+    },
+    {
+      "dataset_id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "group": "all evaluated cell lines",
+      "split_class": "replogle_full_cell_lines",
+      "model_label": "State",
+      "role": "external baseline",
+      "status": "missing",
+      "note": "No Replogle State artifact found in current VCBench summary tables or run directories; do not substitute scale-family state-memory artifacts."
+    },
+    {
+      "dataset_id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "group": "all evaluated cell lines",
+      "split_class": "replogle_full_cell_lines",
+      "model_label": "GEARS",
+      "role": "external baseline",
+      "status": "missing",
+      "note": "No Replogle GEARS artifact found in current VCBench summary tables or run directories."
+    },
+    {
+      "dataset_id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "group": "all evaluated cell lines",
+      "split_class": "replogle_full_cell_lines",
+      "model_label": "scLambda",
+      "role": "external baseline",
+      "status": "missing",
+      "note": "No Replogle scLambda artifact found in current VCBench summary tables or run directories."
+    }
+  ],
+  "gene_level_de_availability": [
+    {
+      "dataset_id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "split_class": "replogle_full_cell_lines",
+      "model_label": "CPA/BioLord/State/GEARS/scLambda",
+      "role": "external baseline",
+      "artifact": "real_de.csv + pred_de.csv",
+      "status": "missing",
+      "usable_figure": "",
+      "note": "External Replogle baseline prediction artifacts are not present, so baseline de_top100_real_vs_pred_log2fc cannot be generated from current files."
+    },
+    {
+      "dataset_id": "vcbench_external_baseline_details",
+      "benchmark": "Kang Task05",
+      "split_class": "kang_task05_lopo_patients",
+      "model_label": "CPA/BioLord/State/GEARS/scLambda",
+      "role": "external baseline",
+      "artifact": "paired real_de.csv + pred_de.csv",
+      "status": "missing",
+      "usable_figure": "baseline_detail_kang_task05_lopo_patients_cellclass_*.svg",
+      "note": "VCBench baseline runs expose summary_avg.csv and summary_by_cellclass.csv metrics including cosine_logfc, spearman_logfc, deg_precision/recall/iou, but not paired DE CSVs."
+    },
+    {
+      "dataset_id": "vcbench_external_baseline_details",
+      "benchmark": "Norman Task07",
+      "split_class": "norman_task07_heldout_combo_genes",
+      "model_label": "CPA/BioLord/State/GEARS/scLambda",
+      "role": "external baseline",
+      "artifact": "paired real_de.csv + pred_de.csv",
+      "status": "missing",
+      "usable_figure": "baseline_detail_norman_task07_heldout_combo_genes_cellclass_*.svg",
+      "note": "VCBench baseline runs expose logFC/DE-overlap proxy metrics, not paired real_de/pred_de CSVs."
+    },
+    {
+      "dataset_id": "task03_task04_matched_detail",
+      "benchmark": "ComboSciPlex3 Task03/04",
+      "split_class": "task03_seen_drug_seen_cell_unseen_cells",
+      "model_label": "SCALE task03 flow/CPA/BioLord",
+      "role": "mixed",
+      "artifact": "paired real_de.csv + pred_de.csv",
+      "status": "missing",
+      "usable_figure": "baseline_detail_task03_seen_drug_seen_cell_unseen_cells_matched_*.svg",
+      "note": "Matched artifacts contain pred/real h5ad paths and per-perturbation deltaPCC/RMSE summaries, but no precomputed real_de/pred_de CSVs."
+    },
+    {
+      "dataset_id": "task03_task04_matched_detail",
+      "benchmark": "ComboSciPlex3 Task03/04",
+      "split_class": "task03_unseen_cell_lines",
+      "model_label": "SCALE task03 flow/CPA/BioLord",
+      "role": "mixed",
+      "artifact": "paired real_de.csv + pred_de.csv",
+      "status": "missing",
+      "usable_figure": "baseline_detail_task03_unseen_cell_lines_matched_*.svg",
+      "note": "Matched artifacts contain pred/real h5ad paths and per-perturbation deltaPCC/RMSE summaries, but no precomputed real_de/pred_de CSVs."
+    },
+    {
+      "dataset_id": "task03_task04_matched_detail",
+      "benchmark": "ComboSciPlex3 Task03/04",
+      "split_class": "task03_unseen_dose_extrapolation",
+      "model_label": "SCALE task03 flow/CPA/BioLord",
+      "role": "mixed",
+      "artifact": "paired real_de.csv + pred_de.csv",
+      "status": "missing",
+      "usable_figure": "baseline_detail_task03_unseen_dose_extrapolation_matched_*.svg",
+      "note": "Matched artifacts contain pred/real h5ad paths and per-perturbation deltaPCC/RMSE summaries, but no precomputed real_de/pred_de CSVs."
+    },
+    {
+      "dataset_id": "task03_task04_matched_detail",
+      "benchmark": "ComboSciPlex3 Task04",
+      "split_class": "task04_seen_single_unseen_combo",
+      "model_label": "SCALE task04 flow/CPA/BioLord",
+      "role": "mixed",
+      "artifact": "paired real_de.csv + pred_de.csv",
+      "status": "missing",
+      "usable_figure": "baseline_detail_task04_seen_single_unseen_combo_matched_*.svg",
+      "note": "Matched artifacts contain pred/real h5ad paths and per-combo deltaPCC/RMSE summaries, but no precomputed real_de/pred_de CSVs."
+    }
+  ],
+  "split_sections": [
+    {
+      "id": "replogle_full_cell_lines",
+      "title": "Replogle full-cell held-out cell lines",
+      "question": "Does scale+pdc recover perturbation deltas and top-DE gene direction across Replogle cell-line contexts?",
+      "object": "delta expression and top100 real/pred log2FC from cell_eval real_de/pred_de files",
+      "method": "Use per-perturbation deltaPCC, DE precision@K, direction match, amplitude bias, and real_vs_pred log2FC scatter.",
+      "figure_keywords": ["replogle_scale_pdc", "de_top100"]
+    },
+    {
+      "id": "kang_task05_lopo_patients",
+      "title": "Kang Task05 LOPO patient splits",
+      "question": "On held-out patients, does scale+pdc beat CPA/BioLord/State/GEARS/scLambda and which baseline is strongest?",
+      "object": "patient/cellclass perturbation delta metrics and VCBench logFC/DE proxy metrics",
+      "method": "Compare headline deltaPCC by patient; inspect baseline metric profile and cellclass heatmaps.",
+      "figure_keywords": ["kang_task05", "kang_task05_lopo_patients"]
+    },
+    {
+      "id": "norman_task07_heldout_combo_genes",
+      "title": "Norman Task07 held-out combinatorial genes",
+      "question": "For unseen combinatorial gene perturbations, where does scale+pdc stand relative to non-scale baselines?",
+      "object": "held-out combo-gene deltaPCC plus VCBench logFC/DE proxy metrics",
+      "method": "Compare scale+pdc against CPA/BioLord/State/GEARS/scLambda and inspect full baseline metric profile.",
+      "figure_keywords": ["norman_task07", "norman_task07_heldout_combo_genes"]
+    },
+    {
+      "id": "task03_seen_drug_seen_cell_unseen_cells",
+      "title": "ComboSciPlex Task03 seen drug + seen cell, unseen cells",
+      "question": "When drug and cell context are in-distribution but cells are held out, which model better preserves perturbation response?",
+      "object": "matched held-out-group deltaPCC/RMSE and per-perturbation summaries",
+      "method": "Use headline matched deltaPCC plus matched_eval detail and per-perturbation distribution plots.",
+      "figure_keywords": ["task03_seen_drug_seen_cell_unseen_cells"]
+    },
+    {
+      "id": "task03_unseen_cell_lines",
+      "title": "ComboSciPlex Task03 unseen cell-line splits",
+      "question": "How does performance change under cell-line OOD generalization?",
+      "object": "A549/K562/MCF7 matched held-out-group and per-perturbation metrics",
+      "method": "Aggregate unseen-cell-line split rows and compare scale flow with CPA/BioLord.",
+      "figure_keywords": ["task03_unseen_cell_lines"]
+    },
+    {
+      "id": "task03_unseen_dose_extrapolation",
+      "title": "ComboSciPlex Task03 unseen-dose extrapolation",
+      "question": "Can models extrapolate dose-response deltas to held-out dose levels?",
+      "object": "test/validation unseen-dose matched deltaPCC/RMSE and per-perturbation metrics",
+      "method": "Compare matched_eval detail and per-perturbation deltaPCC distributions across dose extrapolation splits.",
+      "figure_keywords": ["task03_unseen_dose_extrapolation"]
+    },
+    {
+      "id": "task04_seen_single_unseen_combo",
+      "title": "ComboSciPlex Task04 seen singles, unseen combinations",
+      "question": "Does scale+pdc capture combination response better than CPA/BioLord?",
+      "object": "unseen-combination matched deltaPCC/RMSE and per-combo metrics",
+      "method": "Compare headline matched deltaPCC and per-combination distribution against CPA/BioLord.",
+      "figure_keywords": ["task04_seen_single_unseen_combo"]
+    },
+    {
+      "id": "zscape_external_splits",
+      "title": "ZSCAPE external baseline splits",
+      "question": "Which non-scale baseline artifacts exist for ZSCAPE and can they be compared to scale+pdc in this run?",
+      "object": "VCBench external baseline summary rows",
+      "method": "Report availability and compatible baseline metric profiles when present.",
+      "figure_keywords": ["zscape_external_splits", "zscape"]
+    }
+  ]
+}

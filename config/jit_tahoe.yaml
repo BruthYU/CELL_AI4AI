@@ -1,0 +1,142 @@
+dataset_name: tahoe
+model_name: JIT
+
+cell_sentence_len: 256
+
+layers_before_pool:
+  pert_onehot:
+    num_embeddings: 1138
+    input_dim: 256
+    layer_type: embedding
+    dims: [256, 256]
+    dropout_rate: 0.0
+
+  batch_onehot:
+    num_embeddings: 14 # 根据参与的plate数而定
+    input_dim: 256
+    layer_type: embedding
+    dims: [256, 256]
+    dropout_rate: 0.0
+
+layers_after_pool:
+  layer_type: mlp
+  input_dim: -1  # m * 256, dynamically determined
+  dims: [512, 512]
+  dropout_rate: 0.0
+  act_last_layer: true
+  act_fn: SiLU
+
+layers_for_aggregation:
+  layer_type: mlp
+  input_dim: 1024  # 2 * 512
+  dims: [1024, 512]
+  dropout_rate: 0.0
+  act_last_layer: true
+  act_fn: SiLU
+
+dataset:
+  batch_size: 32
+  num_workers: 16
+  random_seed: 42
+  control_pert: "[('DMSO_TF', 0.0, 'uM')]"
+  cell_sentence_len: ${cell_sentence_len}
+
+  global_keys_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/tahoe/group/global_keys.pkl
+  train_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/tahoe/group/tahoe_train
+  val_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/tahoe/group/tahoe_val
+  test_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/tahoe/group/tahoe_test
+  control_lmdb_path: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/tahoe/group/tahoe_control
+
+Interpolant:
+  probability_path:
+        constant_noise: 0.
+  prior_distribution: gaussian
+  prior_kwargs:
+    total_count: 1
+    logits: 0.1
+    zi_logits: 0
+
+prepare_model:
+    cell_dim: 2000 # gene 维度
+    condition_mode: deterministic # deterministic or stochastic
+    pool_sample_covariates: true
+    regularization: 0.0 # float
+
+    pooling: attention_token
+    pooling_kwargs:
+      num_heads: 8
+      pool_method: mean
+
+    layers_before_pool: ${layers_before_pool}
+    layers_after_pool: ${layers_after_pool}
+    layers_for_aggregation: ${layers_for_aggregation}
+    condition_embedding_dim: 256
+    cond_output_dropout: 0.9
+    condition_encoder_kwargs: {}
+    time_freqs: 512
+    time_max_period: 10000
+    time_encoder_dims: [1024, 512]
+    time_encoder_dropout: 0.0
+    hidden_dims: [2048, 2048, 2048]
+    hidden_dropout: 0.0
+    conditioning: concatenation
+
+    decoder_dims: [4096, 4096, 4096]
+    decoder_dropout: 0.0
+    act_fn: SiLU
+    vf_kwargs: null
+
+    match_fn: match_linear
+    solver_kwargs: {}
+    layer_norm_before_concatenation: false
+    linear_projection_before_concatenation: false
+    seed: 0
+    learning_rate: 1e-3
+    # megatron_ckpt: null
+    megatron_ckpt: /mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/outputs/checkpoints/JIT-TAHOE-RANDOM_20260702_040022/finetune_best-step=93799/weights
+
+
+    cellmap_width: 512
+    cell_sentence_len: ${cell_sentence_len}
+    dit_depth: 36
+
+    cellmap_encoder_kwargs:
+        gene_encoder_type: mlp
+        dims: [2000, 1024, 512]
+        dropout_rate: 0.0
+        act_fn: SiLU
+
+    cellmap_decoder_kwargs:
+        gene_decoder_type: mlp
+        dims: [512, 1024, 2000]
+        dropout_rate: 0.0
+        act_fn: SiLU
+
+    dit_kwargs:
+        num_heads: 16
+        mlp_ratio: 4.0
+
+    pred_type: x
+    loss_type: x
+
+experiment:
+  precision: 32
+  monitor: val_loss
+  ckpt_freq: 50
+  use_wandb: true
+  seed: 42
+  check_val_every_n_epoch: 20
+  num_epoch: 200
+  strategy: ddp
+  time_step: 5
+  num_sanity_val_steps: 2
+
+  num_nodes: 1
+  num_gpus: 8
+  accumulate_grad_batches: 1
+  tensor_model_parallel_size: 1
+  pipeline_model_parallel_size: 1
+
+  # group: jit_llm_set_detach_tahoe
+  group: JIT-TAHOE-RANDOM
+

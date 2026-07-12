@@ -1,0 +1,41 @@
+{
+  "title": "Replogle + Kang scale+pdc benchmark analysis v1",
+  "datasets": [
+    {
+      "id": "replogle_scale_pdc",
+      "benchmark": "Replogle",
+      "label": "scale+pdc",
+      "role": "primary",
+      "type": "cell_eval",
+      "layout": "nested",
+      "path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/replogle_main_corrected_fullcell_remote_ep129_20260623/results_calibrate",
+      "h5ad_root": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/replogle_main_corrected_fullcell_remote_ep129_20260623"
+    },
+    {
+      "id": "replogle_weak_delta_memory",
+      "benchmark": "Replogle",
+      "label": "weak delta-memory",
+      "role": "baseline",
+      "type": "cell_eval_summary",
+      "path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/replogle_train_delta_memory_h5ad_full_20260622/cell_eval_full_de_batch2048_allmetrics/replogle_cell_eval_allmetrics_mean_summary.csv",
+      "h5ad_root": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/replogle_train_delta_memory_h5ad_full_20260622"
+    },
+    {
+      "id": "kang_scale_pdc",
+      "benchmark": "Kang",
+      "label": "scale+pdc",
+      "role": "primary",
+      "type": "kang_pdc",
+      "path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/kang_pdc_s42_cyclic8_20260624"
+    },
+    {
+      "id": "kang_weak_baseline",
+      "benchmark": "Kang",
+      "label": "weak baseline pdc",
+      "role": "baseline",
+      "type": "kang_summary",
+      "path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/kang_baseline_pdc_20260625/audit/pdc_score_summary.json"
+    }
+  ]
+}
+

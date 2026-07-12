@@ -1,0 +1,93 @@
+{
+  "analysis_prompt_path": ".codex/skills/perturbation-benchmark-analysis/references/full_analysis_angles.md",
+  "vcbench": {
+    "runs_root": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/reports/vcbench_comparison_20260611/vcbench_runs",
+    "models": ["cpa", "biolord", "state", "gears", "sclambda"],
+    "seeds": [44],
+    "datasets": [
+      {
+        "dataset": "kang",
+        "benchmark": "Kang Task05",
+        "splits": [
+          "split_lopo_test_patient_101",
+          "split_lopo_test_patient_1015",
+          "split_lopo_test_patient_1016",
+          "split_lopo_test_patient_1039",
+          "split_lopo_test_patient_107",
+          "split_lopo_test_patient_1244",
+          "split_lopo_test_patient_1256",
+          "split_lopo_test_patient_1488"
+        ],
+        "target_col": "perturbation",
+        "control_col": "control",
+        "context_cols": ["patient", "eval_cell_type"]
+      },
+      {
+        "dataset": "norman",
+        "benchmark": "Norman Task07",
+        "splits": ["split_task07_seed42"],
+        "target_col": "perturbation",
+        "control_col": "control",
+        "context_cols": ["eval_cell_type"]
+      },
+      {
+        "dataset": "zscape_unseen_gene",
+        "benchmark": "ZSCAPE develop",
+        "splits": ["split_zscape_seen_cell_unseen_gene_v1"],
+        "target_col": "perturbation",
+        "control_col": "control",
+        "context_cols": ["eval_cell_type"],
+        "max_cellclasses": 40
+      }
+    ]
+  },
+  "scale_pdc": {
+    "kang_h5ad_list_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/reports/vcbench_comparison_20260611/tables/kang_baseline_pdc_h5ads_by_split_20260625.csv",
+    "kang": {
+      "dataset_id": "kang",
+      "benchmark": "Kang Task05",
+      "split_class": "kang_task05_lopo_patients",
+      "seed": "42",
+      "target_col": "condition",
+      "control_col": "control",
+      "control_value": "PBS",
+      "context_cols": ["celltype"]
+    },
+    "manual_units": [
+      {
+        "dataset_id": "norman",
+        "benchmark": "Norman Task07",
+        "split_class": "norman_task07_heldout_combo_genes",
+        "split": "split_task07_seed42",
+        "model": "scale_pdc",
+        "model_label": "SCALE+PDC",
+        "seed": "42",
+        "cellclass": "K562",
+        "real_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/small_pdc_val_selected_20260624/task07_norman/task07_norman_test_pdc_lam0p7122_real.h5ad",
+        "pred_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/small_pdc_val_selected_20260624/task07_norman/task07_norman_test_pdc_lam0p7122_pred.h5ad",
+        "target_col": "condition",
+        "control_col": "control",
+        "control_value": "control",
+        "context_cols": ["celltype"],
+        "selected_lambda": "0.7122"
+      },
+      {
+        "dataset_id": "zscape_unseen_gene",
+        "benchmark": "ZSCAPE develop",
+        "split_class": "zscape_seen_cell_unseen_gene",
+        "split": "split_zscape_seen_cell_unseen_gene_v1",
+        "model": "scale_pdc",
+        "model_label": "SCALE+PDC",
+        "seed": "42",
+        "cellclass": "all_contexts",
+        "real_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/small_pdc_val_selected_20260624/zscape/zscape_test_pdc_lam1p00_real.h5ad",
+        "pred_path": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/benchmark/workspace/small_pdc_val_selected_20260624/zscape/zscape_test_pdc_lam1p00_pred.h5ad",
+        "target_col": "condition",
+        "control_col": "is_control",
+        "control_value": "ctrl-inj",
+        "context_cols": ["celltype"],
+        "selected_lambda": "1.0"
+      }
+    ]
+  }
+}

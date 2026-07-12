@@ -1,0 +1,6 @@
+{
+  "control_count": 215,
+  "elapsed_seconds": 0.9298627376556396,
+  "split": "split_1",
+  "target": "/mnt/shared-storage-gpfs2/beam-gpfs02/yulang/master/nemo_cellflow/preprocessing/arcinstitute/datasets/State_Parse_Filtered/few_shot/split_1/pbmc_control_split_1"
+}
